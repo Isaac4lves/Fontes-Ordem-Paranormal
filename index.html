@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fontes Paranormais</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+        @font-face {
+            font-family: 'Sinais Estrangeiro';
+            src: url('./SinaisEstrangeiro-Regular.ttf');
+        }
+
+        @font-face {
+            font-family: 'Sigilos';
+            src: url('./Sigilos-Regular.ttf');
+        }
+
+        body {
+            background-color: black;
+            color: green;
+            font-family: "Source Code Pro", monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #FonteAtual {
+            font-size: large;
+        }
+
+        #imagem {
+            position: absolute;
+            border: 1px solid green;
+            display: none;
+        }
+        
+        .fundo img {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            
+            mix-blend-mode:normal;
+            opacity:0.1;
+        }
+
+
+        .screen {
+            background-color: black;
+            padding: 20px;
+            border: 2px solid green;
+            width: 80%;
+            max-width: 800px;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        textarea {
+            width: 97%;
+            height: 50%;
+            background-color: black;
+            color: green;
+            border: 1px solid green;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 60px;
+            letter-spacing: 5px;
+            resize: none;
+            padding: 10px;
+        }
+
+        textarea::placeholder {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .buttons button {
+            background-color: black;
+            color: green;
+            border: 1px solid green;
+            padding: 10px 20px;
+            font-family: "Source Code Pro", monospace;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .buttons button:hover {
+            background-color: green;
+            color: black;
+        }
+
+        #Preview {
+            background-color: black;
+            color: green;
+            border: 1px solid green;
+            padding: 10px;
+            font-family: "Source Code Pro", monospace;
+            font-size: 18px;
+            height: 30%;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen">
+        <div class="informations">
+            <p id="FonteAtual"><b>Fonte Atual:</b> Courier New</p>
+            <p id="Preview"></p>
+        </div>
+
+        <textarea id="txtArea" placeholder="Coloque aqui sua mensagem..."></textarea>
+
+        <div class="buttons">
+            <button id="OutroLado">Outro Lado</button>
+            <button id="Save">.PNG</button>
+            <button id="Estrangeiro">Estrangeiro</button>
+        </div>
+
+        <canvas id="imagem" width="1400" height="1000" style="border:1px solid #000000;"></canvas>
+
+        <div class="fundo" style='position:absolute;'>
+            <img src="tela.gif">
+        </div>
+    </div>
+
+    <script>
+        console.log("by @IsaacAlves.dev");
+
+        let fonte_atual = "Source Code Pro";
+
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+
+        document.getElementById("Save").addEventListener("click", function (e) {
+            var canva = document.getElementById("imagem");
+            var link = document.createElement('a');
+            link.download = 'texto.png';
+            link.href = canva.toDataURL('image/png');
+            link.click();
+        });
+
+        function adjustFontSize(ctx, text, maxWidth, initialFontSize) {
+            let fontSize = initialFontSize;
+            do {
+                ctx.font = `${fontSize}px '${fonte_atual}'`;
+                if (ctx.measureText(text).width <= maxWidth) {
+                    break;
+                }
+                fontSize--;
+            } while (fontSize > 0);
+            return fontSize;
+        }
+
+        function Preview() {
+            const preview = document.getElementById("Preview");
+            let txt = document.getElementById("txtArea").value;
+            preview.innerHTML = txt;
+
+            var canva = document.getElementById("imagem");
+            var ctx = canva.getContext("2d");
+            ctx.clearRect(0, 0, canva.width, canva.height);
+
+            const maxWidth = canva.width - 20;
+            const initialFontSize = 1000;
+            const fontSize = adjustFontSize(ctx, txt, maxWidth, initialFontSize);
+
+            ctx.font = `${fontSize}px '${fonte_atual}'`;
+            ctx.fillStyle = 'green';
+
+            const textWidth = ctx.measureText(txt).width;
+            const x = (canva.width - textWidth) / 2;
+            const y = (canva.height + fontSize) / 2;
+
+            ctx.fillText(txt, x, y);
+
+            if (txt === "") {
+                ctx.clearRect(0, 0, canva.width, canva.height);
+            }
+        }
+
+        document.getElementById("txtArea").addEventListener("input", Preview);
+
+        document.getElementById("Estrangeiro").addEventListener("click", function (e) {
+            document.getElementById("txtArea").style.fontFamily = "Sinais Estrangeiro";
+            document.getElementById("txtArea").style.fontSize = "60px";
+            document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Sinais Estrangeiro";
+            fonte_atual = "Sinais Estrangeiro";
+            Preview();
+        });
+
+        document.getElementById("OutroLado").addEventListener("click", function (e) {
+            document.getElementById("txtArea").style.fontFamily = "Sigilos";
+            document.getElementById("txtArea").style.fontSize = "60px";
+            document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Sigilos Outro Lado";
+            fonte_atual = "Sigilos";
+            Preview();
+        });
+    </script>
+</body>
+
+</html>
