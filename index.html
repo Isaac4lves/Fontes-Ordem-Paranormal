@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="ordorealitas_logo.png" sizes="5x5" type="image/png">
+    <link rel="icon" href="./src/ordorealitas_logo.png" sizes="5x5" type="image/png">
     <title>Fontes Paranormais</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
         @font-face {
             font-family: 'Sinais Estrangeiro';
-            src: url('./SinaisEstrangeiro-Regular.ttf');
+            src: url('./src/SinaisEstrangeiro-Regular.ttf');
         }
 
         @font-face {
             font-family: 'Sigilos';
-            src: url('./Sigilos-Regular.ttf');
+            src: url('./src/Sigilos-Regular.ttf');
         }
 
         body {
@@ -172,7 +172,8 @@
 
         <canvas id="imagem" width="1400" height="1000" style="border:1px solid #000000;"></canvas>
 
-        <div class="fundo" style='position:absolute;'></div>
+        <div class="fundo" style='position:absolute;'>
+        </div>
     </div>
 
     <script>
@@ -249,16 +250,13 @@
 
         function trocarTema() {
             const theme = document.querySelector("#choose").value;
-            const fundo = document.querySelector(".fundo");
-
-            fundo.innerHTML = ''; 
 
             if (theme === "Ordem") {
-                fundo.innerHTML = '<img src="tela.gif">';
+                document.querySelector(".fundo").innerHTML = '<img src="./src/fundoOrdem.jpg">';
                 outroLadoTheme();
                 setThemeColor("#55b3ca", "#A2200B");
             } else if (theme === "Estrangeiro") {
-                fundo.innerHTML = '<img src="tela.gif">';
+                document.querySelector(".fundo").innerHTML = '<img src="./src/tela.gif">';
                 estrangeiroTheme();
                 setThemeColor("rgb(63, 167, 63)", "green");
             } else {
@@ -273,7 +271,7 @@
 
         function resetTheme() {
             document.getElementById("txtArea").style.fontFamily = "Courier New";
-            document.getElementById("txtArea").style.fontSize = "20px";
+            document.getElementById("txtArea").style.fontSize = "60px";
             document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Courier New";
             fonte_atual = "Courier New";
             document.body.style.color = "rgb(214, 214, 214)";
@@ -282,8 +280,8 @@
         }
 
         async function loadFonts() {
-            const fontEstrangeiro = new FontFace("Sinais Estrangeiro", "url('./SinaisEstrangeiro-Regular.ttf')");
-            const fontSigilos = new FontFace("Sigilos", "url('./Sigilos-Regular.ttf')");
+            const fontEstrangeiro = new FontFace("Sinais Estrangeiro", "url('./src/SinaisEstrangeiro-Regular.ttf')");
+            const fontSigilos = new FontFace("Sigilos", "url('./src/Sigilos-Regular.ttf')");
 
             await fontEstrangeiro.load();
             await fontSigilos.load();
