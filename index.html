@@ -250,6 +250,7 @@
 
         function trocarTema() {
             const theme = document.querySelector("#choose").value;
+            document.querySelector(".fundo").innerHTML = '';
 
             if (theme === "Ordem") {
                 document.querySelector(".fundo").innerHTML = '<img src="./src/fundoOrdem.jpg">';
