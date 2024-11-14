@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="ordorealitas_logo.png" sizes="5x5" type="image/png">
     <title>Fontes Paranormais</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
@@ -20,7 +21,7 @@
 
         body {
             background-color: black;
-            color: green;
+            color: rgb(214, 214, 214);
             font-family: "Source Code Pro", monospace;
             text-align: center;
             margin: 0;
@@ -32,15 +33,15 @@
         }
 
         #FonteAtual {
-            font-size: large;
+            font-size: larger;
         }
 
         #imagem {
             position: absolute;
-            border: 1px solid green;
+            border: 1px solid  rgb(214, 214, 214);
             display: none;
         }
-        
+
         .fundo img {
             position: fixed;
             width: 100%;
@@ -48,16 +49,16 @@
             top: 0;
             left: 0;
             z-index: -1;
-            
-            mix-blend-mode:normal;
-            opacity:0.1;
+
+            mix-blend-mode: normal;
+            opacity: 0.1;
         }
 
 
         .screen {
             background-color: black;
             padding: 20px;
-            border: 2px solid green;
+            border: 2px solid  rgb(214, 214, 214);
             width: 80%;
             max-width: 800px;
             height: 70%;
@@ -70,8 +71,8 @@
             width: 97%;
             height: 50%;
             background-color: black;
-            color: green;
-            border: 1px solid green;
+            color:  rgb(214, 214, 214);
+            border: 1px solid  rgb(214, 214, 214);
             font-family: 'Courier New', Courier, monospace;
             font-size: 60px;
             letter-spacing: 5px;
@@ -85,13 +86,13 @@
 
         .buttons {
             display: flex;
-            justify-content: space-around;
+            justify-content: flex-end;
         }
 
         .buttons button {
             background-color: black;
-            color: green;
-            border: 1px solid green;
+            color:  rgb(214, 214, 214);
+            border: 1px solid  rgb(214, 214, 214);
             padding: 10px 20px;
             font-family: "Source Code Pro", monospace;
             font-size: 18px;
@@ -99,24 +100,63 @@
         }
 
         .buttons button:hover {
-            background-color: green;
+            background-color:  rgb(214, 214, 214);
             color: black;
         }
 
         #Preview {
             background-color: black;
-            color: green;
-            border: 1px solid green;
+            color:  rgb(214, 214, 214);
+            border: 1px solid  rgb(214, 214, 214);
             padding: 10px;
             font-family: "Source Code Pro", monospace;
             font-size: 18px;
             height: 30%;
             overflow: auto;
         }
+        .switch{
+            position: absolute;
+            top: 4%;
+            left: 2%;
+        }
+        .switch #choose{
+            font-family: "Source Code Pro", monospace;
+            font-size: 16px;
+            text-align: center;
+            border-radius: 2%;
+            width: 140px;
+            height: 45px;
+        }
+        .switch button{
+            font-family: "Source Code Pro", monospace;
+            position: relative;
+            border: none;
+            left: -7px;
+            height: 40px;
+        }
+        #choose #ordem {
+            background-color: #55b3ca ;
+        }
+        #choose #estrangeiro {
+            background-color: rgb(83, 206, 83);
+        }
+        
+        
     </style>
 </head>
 
 <body>
+    <div class="top">
+        <label class="switch">
+            <select id="choose">
+                <option value="default">Selecione</option>
+                <option id="ordem" value="Ordem">Ordem</option>
+                <option id="estrangeiro" value="Estrangeiro">Estrangeiro</option>
+            </select>
+            <button id="switch_theme">Trocar</button>
+        </label>
+    </div>
+    
     <div class="screen">
         <div class="informations">
             <p id="FonteAtual"><b>Fonte Atual:</b> Courier New</p>
@@ -126,15 +166,13 @@
         <textarea id="txtArea" placeholder="Coloque aqui sua mensagem..."></textarea>
 
         <div class="buttons">
-            <button id="OutroLado">Outro Lado</button>
-            <button id="Save">.PNG</button>
-            <button id="Estrangeiro">Estrangeiro</button>
+            <button id="Save">Salvar</button>
         </div>
 
         <canvas id="imagem" width="1400" height="1000" style="border:1px solid #000000;"></canvas>
 
         <div class="fundo" style='position:absolute;'>
-            <img src="tela.gif">
+            
         </div>
     </div>
 
@@ -142,14 +180,6 @@
         console.log("by @IsaacAlves.dev");
 
         let fonte_atual = "Source Code Pro";
-
-        function copyToClipboard(element) {
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val($(element).text()).select();
-            document.execCommand("copy");
-            $temp.remove();
-        }
 
         document.getElementById("Save").addEventListener("click", function (e) {
             var canva = document.getElementById("imagem");
@@ -200,21 +230,61 @@
 
         document.getElementById("txtArea").addEventListener("input", Preview);
 
-        document.getElementById("Estrangeiro").addEventListener("click", function (e) {
+       function estrangeiroTheme() {
             document.getElementById("txtArea").style.fontFamily = "Sinais Estrangeiro";
             document.getElementById("txtArea").style.fontSize = "60px";
             document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Sinais Estrangeiro";
             fonte_atual = "Sinais Estrangeiro";
             Preview();
-        });
+        };
 
-        document.getElementById("OutroLado").addEventListener("click", function (e) {
+        function outroLadoTheme(){
             document.getElementById("txtArea").style.fontFamily = "Sigilos";
             document.getElementById("txtArea").style.fontSize = "60px";
             document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Sigilos Outro Lado";
             fonte_atual = "Sigilos";
             Preview();
-        });
+        };
+
+        document.querySelector("#switch_theme").addEventListener("click",trocarTema);
+
+        function trocarTema(){
+            let theme = document.querySelector("#choose").value;
+
+            if (theme == "Ordem"){
+                document.querySelector(".fundo").appendChild = `<img src="tela.gif">`;
+                outroLadoTheme();
+                document.body.style.color = "#55b3ca";
+                document.querySelector("#FonteAtual").style.color = "#55b3ca";
+                document.querySelector(".screen").style.border = "2px solid #55b3ca";
+                document.querySelector("textarea").style.color = "#A2200B";
+                document.querySelector("textarea").style.border = "1px solid #55b3ca";
+                document.querySelector("#Preview").style.color = "#55b3ca";
+                document.querySelector("#Preview").style.border = "1px solid #55b3ca";
+            }
+            
+            if (theme == "Estrangeiro"){
+                document.querySelector(".fundo").appendChild = `<img src="tela.gif">`;
+                estrangeiroTheme();
+                document.body.style.color = "rgb(63, 167, 63)";
+                document.querySelector("#FonteAtual").style.color = "rgb(63, 167, 63)";
+                document.querySelector(".screen").style.border = "2px solid rgb(63, 167, 63)";
+                document.querySelector("textarea").style.color = "green";
+                document.querySelector("textarea").style.border = "1px solid rgb(63, 167, 63)";
+                document.querySelector("#Preview").style.color = "rgb(63, 167, 63)";
+                document.querySelector("#Preview").style.border = "1px solid rgb(63, 167, 63)";
+            }
+
+            if( theme == "default") {
+                document.body.style.color = "rgb(214, 214, 214)";
+                document.querySelector("#FonteAtual").style.color = "rgb(214, 214, 214)";
+                document.querySelector(".screen").style.border = "2px solid rgb(214, 214, 214)";
+                document.querySelector("textarea").style.color = "rgb(214, 214, 214)";
+                document.querySelector("textarea").style.border = "1px solid rgb(214, 214, 214)";
+                document.querySelector("#Preview").style.color = "rgb(214, 214, 214)";
+                document.querySelector("#Preview").style.border = "1px solid rgb(214, 214, 214)";
+            }
+        }
     </script>
 </body>
 
