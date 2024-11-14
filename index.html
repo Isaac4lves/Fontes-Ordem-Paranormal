@@ -214,7 +214,7 @@
             const fontSize = adjustFontSize(ctx, txt, maxWidth, initialFontSize);
 
             ctx.font = `${fontSize}px '${fonte_atual}'`;
-            ctx.fillStyle = 'green';
+            ctx.fillStyle = 'white';
 
             const textWidth = ctx.measureText(txt).width;
             const x = (canva.width - textWidth) / 2;
@@ -251,7 +251,7 @@
             const theme = document.querySelector("#choose").value;
             const fundo = document.querySelector(".fundo");
 
-            fundo.innerHTML = ''; // Limpa imagem anterior
+            fundo.innerHTML = ''; 
 
             if (theme === "Ordem") {
                 fundo.innerHTML = '<img src="tela.gif">';
