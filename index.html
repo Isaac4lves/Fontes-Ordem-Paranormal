@@ -38,7 +38,7 @@
 
         #imagem {
             position: absolute;
-            border: 1px solid  rgb(214, 214, 214);
+            border: 1px solid rgb(214, 214, 214);
             display: none;
         }
 
@@ -49,16 +49,14 @@
             top: 0;
             left: 0;
             z-index: -1;
-
             mix-blend-mode: normal;
             opacity: 0.1;
         }
 
-
         .screen {
             background-color: black;
             padding: 20px;
-            border: 2px solid  rgb(214, 214, 214);
+            border: 2px solid rgb(214, 214, 214);
             width: 80%;
             max-width: 800px;
             height: 70%;
@@ -71,8 +69,8 @@
             width: 97%;
             height: 50%;
             background-color: black;
-            color:  rgb(214, 214, 214);
-            border: 1px solid  rgb(214, 214, 214);
+            color: rgb(214, 214, 214);
+            border: 1px solid rgb(214, 214, 214);
             font-family: 'Courier New', Courier, monospace;
             font-size: 60px;
             letter-spacing: 5px;
@@ -91,8 +89,8 @@
 
         .buttons button {
             background-color: black;
-            color:  rgb(214, 214, 214);
-            border: 1px solid  rgb(214, 214, 214);
+            color: rgb(214, 214, 214);
+            border: 1px solid rgb(214, 214, 214);
             padding: 10px 20px;
             font-family: "Source Code Pro", monospace;
             font-size: 18px;
@@ -100,26 +98,28 @@
         }
 
         .buttons button:hover {
-            background-color:  rgb(214, 214, 214);
+            background-color: rgb(214, 214, 214);
             color: black;
         }
 
         #Preview {
             background-color: black;
-            color:  rgb(214, 214, 214);
-            border: 1px solid  rgb(214, 214, 214);
+            color: rgb(214, 214, 214);
+            border: 1px solid rgb(214, 214, 214);
             padding: 10px;
             font-family: "Source Code Pro", monospace;
             font-size: 18px;
             height: 30%;
             overflow: auto;
         }
-        .switch{
+
+        .switch {
             position: absolute;
             top: 4%;
             left: 2%;
         }
-        .switch #choose{
+
+        .switch #choose {
             font-family: "Source Code Pro", monospace;
             font-size: 16px;
             text-align: center;
@@ -127,21 +127,22 @@
             width: 140px;
             height: 45px;
         }
-        .switch button{
+
+        .switch button {
             font-family: "Source Code Pro", monospace;
             position: relative;
             border: none;
             left: -7px;
             height: 40px;
         }
+
         #choose #ordem {
-            background-color: #55b3ca ;
+            background-color: #55b3ca;
         }
+
         #choose #estrangeiro {
             background-color: rgb(83, 206, 83);
         }
-        
-        
     </style>
 </head>
 
@@ -156,7 +157,7 @@
             <button id="switch_theme">Trocar</button>
         </label>
     </div>
-    
+
     <div class="screen">
         <div class="informations">
             <p id="FonteAtual"><b>Fonte Atual:</b> Courier New</p>
@@ -171,9 +172,7 @@
 
         <canvas id="imagem" width="1400" height="1000" style="border:1px solid #000000;"></canvas>
 
-        <div class="fundo" style='position:absolute;'>
-            
-        </div>
+        <div class="fundo" style='position:absolute;'></div>
     </div>
 
     <script>
@@ -181,9 +180,9 @@
 
         let fonte_atual = "Source Code Pro";
 
-        document.getElementById("Save").addEventListener("click", function (e) {
-            var canva = document.getElementById("imagem");
-            var link = document.createElement('a');
+        document.getElementById("Save").addEventListener("click", function () {
+            const canva = document.getElementById("imagem");
+            const link = document.createElement('a');
             link.download = 'texto.png';
             link.href = canva.toDataURL('image/png');
             link.click();
@@ -203,11 +202,11 @@
 
         function Preview() {
             const preview = document.getElementById("Preview");
-            let txt = document.getElementById("txtArea").value;
+            const txt = document.getElementById("txtArea").value;
             preview.innerHTML = txt;
 
-            var canva = document.getElementById("imagem");
-            var ctx = canva.getContext("2d");
+            const canva = document.getElementById("imagem");
+            const ctx = canva.getContext("2d");
             ctx.clearRect(0, 0, canva.width, canva.height);
 
             const maxWidth = canva.width - 20;
@@ -230,61 +229,69 @@
 
         document.getElementById("txtArea").addEventListener("input", Preview);
 
-       function estrangeiroTheme() {
+        function estrangeiroTheme() {
             document.getElementById("txtArea").style.fontFamily = "Sinais Estrangeiro";
             document.getElementById("txtArea").style.fontSize = "60px";
             document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Sinais Estrangeiro";
             fonte_atual = "Sinais Estrangeiro";
             Preview();
-        };
+        }
 
-        function outroLadoTheme(){
+        function outroLadoTheme() {
             document.getElementById("txtArea").style.fontFamily = "Sigilos";
             document.getElementById("txtArea").style.fontSize = "60px";
             document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Sigilos Outro Lado";
             fonte_atual = "Sigilos";
             Preview();
-        };
+        }
 
-        document.querySelector("#switch_theme").addEventListener("click",trocarTema);
+        document.querySelector("#switch_theme").addEventListener("click", trocarTema);
 
-        function trocarTema(){
-            let theme = document.querySelector("#choose").value;
+        function trocarTema() {
+            const theme = document.querySelector("#choose").value;
+            const fundo = document.querySelector(".fundo");
 
-            if (theme == "Ordem"){
-                document.querySelector(".fundo").appendChild = `<img src="tela.gif">`;
+            fundo.innerHTML = ''; // Limpa imagem anterior
+
+            if (theme === "Ordem") {
+                fundo.innerHTML = '<img src="tela.gif">';
                 outroLadoTheme();
-                document.body.style.color = "#55b3ca";
-                document.querySelector("#FonteAtual").style.color = "#55b3ca";
-                document.querySelector(".screen").style.border = "2px solid #55b3ca";
-                document.querySelector("textarea").style.color = "#A2200B";
-                document.querySelector("textarea").style.border = "1px solid #55b3ca";
-                document.querySelector("#Preview").style.color = "#55b3ca";
-                document.querySelector("#Preview").style.border = "1px solid #55b3ca";
-            }
-            
-            if (theme == "Estrangeiro"){
-                document.querySelector(".fundo").appendChild = `<img src="tela.gif">`;
+                setThemeColor("#55b3ca", "#A2200B");
+            } else if (theme === "Estrangeiro") {
+                fundo.innerHTML = '<img src="tela.gif">';
                 estrangeiroTheme();
-                document.body.style.color = "rgb(63, 167, 63)";
-                document.querySelector("#FonteAtual").style.color = "rgb(63, 167, 63)";
-                document.querySelector(".screen").style.border = "2px solid rgb(63, 167, 63)";
-                document.querySelector("textarea").style.color = "green";
-                document.querySelector("textarea").style.border = "1px solid rgb(63, 167, 63)";
-                document.querySelector("#Preview").style.color = "rgb(63, 167, 63)";
-                document.querySelector("#Preview").style.border = "1px solid rgb(63, 167, 63)";
-            }
-
-            if( theme == "default") {
-                document.body.style.color = "rgb(214, 214, 214)";
-                document.querySelector("#FonteAtual").style.color = "rgb(214, 214, 214)";
-                document.querySelector(".screen").style.border = "2px solid rgb(214, 214, 214)";
-                document.querySelector("textarea").style.color = "rgb(214, 214, 214)";
-                document.querySelector("textarea").style.border = "1px solid rgb(214, 214, 214)";
-                document.querySelector("#Preview").style.color = "rgb(214, 214, 214)";
-                document.querySelector("#Preview").style.border = "1px solid rgb(214, 214, 214)";
+                setThemeColor("rgb(63, 167, 63)", "green");
+            } else {
+                resetTheme();
             }
         }
+
+        function setThemeColor(mainColor, textareaColor) {
+            document.body.style.color = mainColor;
+            document.querySelector("#txtArea").style.color = textareaColor;
+        }
+
+        function resetTheme() {
+            document.getElementById("txtArea").style.fontFamily = "Courier New";
+            document.getElementById("txtArea").style.fontSize = "20px";
+            document.getElementById("FonteAtual").innerHTML = "<b>Fonte Atual:</b> Courier New";
+            fonte_atual = "Courier New";
+            document.body.style.color = "rgb(214, 214, 214)";
+            document.querySelector("#txtArea").style.color = "rgb(214, 214, 214)";
+            Preview();
+        }
+
+        async function loadFonts() {
+            const fontEstrangeiro = new FontFace("Sinais Estrangeiro", "url('./SinaisEstrangeiro-Regular.ttf')");
+            const fontSigilos = new FontFace("Sigilos", "url('./Sigilos-Regular.ttf')");
+
+            await fontEstrangeiro.load();
+            await fontSigilos.load();
+            document.fonts.add(fontEstrangeiro);
+            document.fonts.add(fontSigilos);
+        }
+
+        loadFonts().then(Preview);
     </script>
 </body>
 
